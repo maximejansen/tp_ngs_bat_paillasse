@@ -21,7 +21,8 @@ Trinity --seqType fq \
         --right Lib1_31_20_S1_R2_001.fastq.gz
 
 #Résultat: cela prend une heure juste pour un jeu de données.
-        
+
+
 #Utinisation generalisé de trinity
         
 Trinity --seqType fq \
@@ -136,6 +137,46 @@ do
 done
 
 
+### Jour 3:
 
+#réalisation de FASTQC sur le resultat trimmomatic paired. Donc réalisation des inputs et outputs
+input="mydata/trimmomatic"
+mkdir -p mydata/fastqc/trimmomatic
+output="mydata/fastqc/trimmomatic"
 
+# test de fastqc
+for fichier in $input/*_paired.fastq.gz
+do
+  echo $fichier
+done
+
+#vrai fastqc du résultat trimmomatic "paired"
+for fichier in $input/*_paired.fastq.gz
+do
+  fastqc $fichier --outdir $output \
+        --format fastq \
+        --threads 8
+done
+
+# realisation de Trinity. 
+
+# définition des outputs et inputs, ainsi que les listes pour les différents inputs: les R1 et les R2
+input="mydata/trimmomatic"
+mkdir -p mydata/trinity2
+output="mydata/trinity2"
+input_all1=$(ls $input/*R1_paired.fastq.gz |paste -d "," -s)
+input_all2=$(ls $input/*R2_paired.fastq.gz |paste -d "," -s)
+
+#teste des listes
+echo $input_all1
+echo $input_all2
+
+#Trinity en fonctionnement
+Trinity --seqType fq \
+        --max_memory 14G \
+        --CPU 4 \
+        --left $input_all1 \
+        --right $input_all2 \
+        --output $output \
+        --SS_lib_type RF
 
