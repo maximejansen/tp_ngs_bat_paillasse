@@ -14,12 +14,16 @@ var="1
 5
 6"
 
-#création du dossier pour salmon quant
+# input de l'index:
+indexon="mydata/salmon_index"
+
+#création du dossier pour salmon quant et de sa variable
 mkdir -p mydata/salmon_quant
+output="mydata/salmon_quant"
 
 #execution du programme 
 for n in $var
 do
-salmon quant -i mydata/salmon_index -l A -1 $input/Lib${n}_31_20_S${n}_R1_paired.fastq.gz -2 $input/Lib${n}_31_20_S${n}_R2_paired.fastq.gz --validateMappings -o mydata/salmon_quant
+salmon quant -i $indexon -l A -1 $input/Lib${n}_31_20_S${n}_R1_paired.fastq.gz -2 $input/Lib${n}_31_20_S${n}_R2_paired.fastq.gz --validateMappings -o $output
 done
 
