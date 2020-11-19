@@ -13,5 +13,5 @@ output="mydata/salmon_index"
 input="mydata/trinity/Trinity_RF.fasta"
 
 
-
+#réalisation dy Salmon index:
 salmon index -t $input -i $output -p 4
