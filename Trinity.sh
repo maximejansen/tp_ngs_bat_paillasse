@@ -5,15 +5,6 @@ data="data/mydatalocal"
 cd
 cd $data
 
-
-#utilisation de Trinity test avec le premier jeu de données
-Trinity --seqType fq \
-        --max_memory 10G \
-        --CPU 4 \
-        --left Lib1_31_20_S1_R1_001.fastq.gz \
-        --right Lib1_31_20_S1_R2_001.fastq.gz
-#Résultat: cela prend une heure juste pour un jeu de données.
-
 ### réalisation de FASTQC afin de vérifier si les données sont correctes.
 
 #création du dossier pour FASTQC. 
@@ -31,7 +22,7 @@ done
 # realisation et collecter des données en local. 
 for fichier in $fasta
 do
-  fastqc $fichier --outdir mydata/fastqc \
+  fastqc $fichier --outdir mydata/fastqc/original_data \
         --format fastq \
         --threads 8
 done
@@ -44,67 +35,16 @@ mkdir mydata/trimmomatic
 input="download/Projet_31_20_UE_NGS_2020"
 output="mydata/trimmomatic"
 
-# Utilisation de Trimmomatic:
-
-java -jar /softwares/Trimmomatic-0.39/trimmomatic-0.39.jar -threads 8 -#! /bin/bash
-
-# Dossier par défaut. 
-data="data/mydatalocal"
-cd
-cd $data
-
-#création du dossier pour FASTQC. 
-mkdir -p mydata/fastqc
-
-#Récupérer mes données fastq:
-fasta="download/Projet_31_20_UE_NGS_2020/FASTQ/*.gz"
-
-#utilisation de Trinity test avec le premier jeu de données
-
-
-Trinity --seqType fq \
-        --max_memory 10G \
-        --CPU 4 \
-        --left Lib1_31_20_S1_R1_001.fastq.gz \
-        --right Lib1_31_20_S1_R2_001.fastq.gz
-
-#Résultat: cela prend une heure juste pour un jeu de données.
-        
-#Utinisation generalisé de trinity
-        
-Trinity --seqType fq \
-        --max_memory 14G \
-        --CPU 4 \
-        --left Lib1_31_20_S1_R1_001.fastq.gz, \
-        --right Lib4_31_20_S4_R2_001.fastq.gz,
-
-# test de la boucle FASTQC: elle fonctionne correctement. 
-
-for fichier in $fasta
-do
-  echo "$fichier"
-done
-
-# realisation et collecter des données en local. 
-
-for fichier in $fasta
-do
-  fastqc $fichier --outdir mydata/fastqc \
-        --format fastq \
-        --threads 8
-done
 
 #j'utilise Trimmomatic pour retirer les mauvais rides des fichier
-#création des output Trimmomatic
+#création des fichier pour les output Trimmomatic
 mkdir mydata/trimmomatic
 
 #variavle pour input et output 
-
 input="download/Projet_31_20_UE_NGS_2020/FASTQ"
 output="mydata/trimmomatic"
 
 #variable fasta et nombre pour la boucle ainsi le nom des fichiers 
-
 fasta="download/adapt.fasta"
 boucle="1
 2
@@ -112,6 +52,7 @@ boucle="1
 4
 5
 6"
+
 # Utilisation de Trimmomatic:
 #test de la boucle
 for n in $boucle
@@ -155,6 +96,7 @@ mkdir -p mydata/trinity2
 output="mydata/trinity2"
 input_all1=$(ls $input/*R1_paired.fastq.gz |paste -d "," -s)
 input_all2=$(ls $input/*R2_paired.fastq.gz |paste -d "," -s)
+#le output est trinity 2 car on ne le run pas et on nous l'a donné dans trinity. 
 
 #teste des listes
 echo $input_all1
