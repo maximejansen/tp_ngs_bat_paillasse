@@ -8,7 +8,7 @@ readme du projet ngs
 
 Une fois les données récupérées sur le serveur de l'IGFL et une connections au GitHub réalisée, on à commencer par regarder ce que l'ont a à faire et comment le faire.
 
-Il y a six couples que je te donner numéroter entre 1 et 6. Chaque couple est représenté par deux fichiers représentant les 2 Read nommés R1 et R2, soit d'un Paired-End Reads.
+Il y a six couples que je te donner numéroter entre 1 et 6. Chaque couple est représenté par deux fichiers représentant les 2 Read nommés R1 et R2, soit d'un Paired-End Reads. 
 
 
 # Jour 2:
