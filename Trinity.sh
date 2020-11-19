@@ -5,7 +5,7 @@ data="data/mydatalocal"
 cd
 cd $data
 
-### réalisation de FASTQC afin de vérifier si les données sont correctes.
+# réalisation de FASTQC afin de vérifier si les données sont correctes.
 
 #création du dossier pour FASTQC. 
 mkdir -p mydata/fastqc
