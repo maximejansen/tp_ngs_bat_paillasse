@@ -18,7 +18,8 @@ On a commencé par examiner la qualité des jeux de données que l'on a reçu. P
 Les résultats obtenus via ce programme ont étaient rangés dans mydata/fastqc/original_data
 
 voici 2 résultats type:
-
+![GitHub Logo](/picture/Lib1_31_20_S1_R1_001.fastq.gz.png)
+![GitHub Logo](/picture/Lib1_31_20_S1_R2_001.fastq.gz.png)
 
 Comme on peut constater, les résultats sont globalement concluant sur la qualité des séquençage. Au revanche, on peut constater qu'il y a des problèmes au niveau des neuf premiers pas de base ainsi que à la fin de chaque séquence. Pour ce dernier, il est possible que ce soit les inserts qui soit aussi analyser, réduisant ainsi la fiabilité à la fin. Pour régler le problème, on a décidé de faire fonctionner le logiciel Trimmomatic afin de régler les différents problèmes Ainsi que d'harmoniser les différents séquençage. 
 
