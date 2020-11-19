@@ -19,8 +19,8 @@ Les résultats obtenus via ce programme ont étaient rangés dans mydata/fastqc/
 
 voici 2 résultats type:
 ![illumina image](picture/Lib1_31_20_S1_R1_001.fastq.gz%20FastQC%20Report-1.png)
-![illumina image](picture/Lib1_31_20_S1_R1_001.fastq.gz FastQC Report-1.png)
-<img src="picture/Lib1_31_20_S1_R1_001.fastq.gz FastQC Report-1.png" alt="legend (illumina image)" width="50%"/>
+![illumina image](picture/Lib1_31_20_S1_R2_001.fastq.gz%20FastQC%20Report-1.png)
+
 
 
 
