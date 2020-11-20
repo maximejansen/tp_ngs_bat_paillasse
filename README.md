@@ -28,7 +28,8 @@ La structure du jeu de données est la suivante:
 
 On a commencé par examiner la qualité des jeux de données que l'on a reçu. Pour ce faire, on a utilisé le programme FASTQC afin de pouvoir analyser la qualité des différents jeux de données comprenant le séquençage des ARNm. On peut retrouver le code qui a été écrit pour faire cela dans le fichier data_quality_control/Trinity.sh
 
-Voici les paramètres de FASTQC: 
+Voici les paramètres de FASTQC:
+
     - Sortie : mydata/fastqc/original_data
     - Format de fichier : fastq
     - nombre de Coeur utilisé : 4
