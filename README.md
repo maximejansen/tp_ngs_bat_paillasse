@@ -128,30 +128,26 @@ Voici les paramètres utilisés pour salmon quant :
 
 FASTQC :
 
-  Version : FastQC v0.11.8
-  
-  Référence : https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+  - Version : FastQC v0.11.8
+  - Référence : https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 
 
 Trimmomatic :
 
-  Version : 0.39
-  
-  Référence : http://www.usadellab.org/cms/?page=trimmomatic
+  - Version : 0.39
+  - Référence : http://www.usadellab.org/cms/?page=trimmomatic
 
 
 Trinity :
 
-  Version : Trinity-v2.8.5
-  
-  Référence : https://github.com/trinityrnaseq/trinityrnaseq/wiki
+  - Version : Trinity-v2.8.5
+  - Référence : https://github.com/trinityrnaseq/trinityrnaseq/wiki
 
 
 Salmon :
 
-  Version : salmon 0.14.1
-  
-  Référence : https://salmon.readthedocs.io/en/latest/salmon.html
+  - Version : salmon 0.14.1
+  - Référence : https://salmon.readthedocs.io/en/latest/salmon.html
 
 
 
