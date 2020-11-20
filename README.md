@@ -1,9 +1,10 @@
 ### TP NGS Bat paillasse
 
 readme du projet ngs
+
 La réponse immunitaire aux Interférons pourrais être différent entre les différentes espèces de chauve-souris. Par ailleurs, différentes duplications des IGSs ont été observées dans les différentes espèces de chauves-souris, mais les différentes copies n'inspecterai pas les la réponse à l'interférons de type I. 
 
-Une équipe de l'IGFL, à Lyon, France, a donc réalisé un RNAsaq sur des cultures de cellules de *Myotis velifer* exposées ou non à de l'IFN pendant 6 heures. Cela à notamment pour but de déterminer quel ISGs sont transcriptomiquement réguler par l'induction d'IFN. 
+Une équipe du CIRI, à Lyon, France, a donc réalisé un RNAsaq sur des cultures de cellules de *Myotis velifer* exposées ou non à de l'IFN pendant 6 heures. Cela à notamment pour but de déterminer quel ISGs sont transcriptomiquement réguler par l'induction d'IFN. 
 
 Pour ce faire, nous avons utilisé différents scripts et programmes que l'**on peut trouver les références en bas du document**. 
 
@@ -26,7 +27,7 @@ La structure du jeu de données est la suivante:
 
 # controle qualité :
 
-On a commencé par examiner la qualité des jeux de données que l'on a reçu. Pour ce faire, on a utilisé le programme FASTQC afin de pouvoir analyser la qualité des différents jeux de données comprenant le séquençage des ARNm. On peut retrouver le code qui a été écrit pour faire cela dans le fichier data_quality_control/Trinity.sh
+On a commencé par examiner la qualité des jeux de données que l'on a reçu. Pour ce faire, on a utilisé le programme FASTQC afin de pouvoir analyser la qualité des différents jeux de données comprenant le séquençage des ARNm. On peut retrouver le code qui a été écrit pour faire cela dans le fichier data_quality_control/fastqc/fastqc_original_data.sh
 
 Voici les paramètres de FASTQC:
 
@@ -47,7 +48,8 @@ Sur la gauche, on peut constater dans le summary les différents tests qui ont �
 
 Sur la droite, il s'agit des résultats de la qualité des séquences le long des lectures. En premier lieu, on peut constater que parmi les premières pairs de bases (bp) il y a une mauvaise qualités des séquences. De même, la qualité de ses dernières diminu de plus en plus quand on avance sur les séquences. Cela est très certainement dû à la lecture des adaptateurs sur certaines séquences, ce qui est corrélé avec le résultat de "Adapter Content" qui monte jusqu'à 22% des séquences. Il faudrat donc réaliser une coupe au début de la séquence et enlever les séquences des adaptateur utilisez à la fin.
 
-Afin d'harmoniser les résultats ainsi que d'améliorer la qualité des séquences, nous avons utilisé le programme Trimmomatic. Il est possible de voir le code utilisé aussi dans Trinity.sh, à la suite. **La suite est réalisée avec uniquement les paired fichiers**.
+Afin d'harmoniser les résultats ainsi que d'améliorer la qualité des séquences, nous avons utilisé le programme Trimmomatic. Il est possible de voir le code utilisé dans trimmomatic/trimmomatic.sh.
+**La suite est réalisée avec uniquement les paired fichiers**.
 
 Voici les paramètres de Trimmomatic :
 
@@ -63,12 +65,12 @@ Voici les paramètres de Trimmomatic :
 
 Comme on peut constater, les résultats sont globalement concluant sur la qualité des séquençage. Au revanche, on peut constater qu'il y a des problèmes au niveau des neuf premiers pas de base ainsi que à la fin de chaque séquence. Pour ce dernier, il est possible que ce soit les inserts qui soit aussi analyser, réduisant ainsi la fiabilité à la fin. Pour régler le problème, on a décidé de faire fonctionner le logiciel Trimmomatic afin de régler les différents problèmes Ainsi que d'harmoniser les différents séquençage. 
 
-Il est possible de voir le code utilisé aussi dans Trinity.sh, à la suite. La suite est réalisée avec uniquement les paired fichiers. Le résultat de Trimmomatic se situe dans mydata/trimmomatic. 
+La suite est réalisée avec uniquement les paired fichiers. Le résultat de Trimmomatic se situe dans mydata/trimmomatic. 
 
 
 # second controle qualité:
 
-Le programme FASTQC À été relancé cette Fois ci sur les résultats de Trimmomatic paired, afin de vérifier si la qualité des séquences à été améliorées. Le script utilisé pour ce FASTQC se trouve dans le fichier data/quility_control/Trinity.sh, à la suite. 
+Le programme FASTQC À été relancé cette Fois ci sur les résultats de Trimmomatic paired, afin de vérifier si la qualité des séquences à été améliorées. Le script utilisé pour ce FASTQC est quality_control/fatsqc/fastqc_trimmomatic.sh. 
 
 Voici les paramètres de ce FASTQC: 
 
