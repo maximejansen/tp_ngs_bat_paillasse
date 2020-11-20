@@ -50,6 +50,7 @@ Sur la droite, il s'agit des résultats de la qualité des séquences le long de
 Afin d'harmoniser les résultats ainsi que d'améliorer la qualité des séquences, nous avons utilisé le programme Trimmomatic. Il est possible de voir le code utilisé aussi dans Trinity.sh, à la suite. **La suite est réalisée avec uniquement les paired fichiers**.
 
 Voici les paramètres de Trimmomatic :
+
     - Entrer 1 : download/Projet_31_20_UE_NGS_2020/FASTQ/fichier avec fichier = R1
     - Entrer 2 : download/Projet_31_20_UE_NGS_2020/FASTQ/fichier avec fichier = R2
     - Les 4 sorties : mydata/trimmomatic/
@@ -70,6 +71,7 @@ Il est possible de voir le code utilisé aussi dans Trinity.sh, à la suite. La 
 Le programme FASTQC À été relancé cette Fois ci sur les résultats de Trimmomatic paired, afin de vérifier si la qualité des séquences à été améliorées. Le script utilisé pour ce FASTQC se trouve dans le fichier data/quility_control/Trinity.sh, à la suite. 
 
 Voici les paramètres de ce FASTQC: 
+
     - Sortie : mydata/fastqc/trimmomatic
     - Format de fichier : fastq
     - nombre de Coeur utilisé : 4
@@ -84,6 +86,7 @@ Comme on peut le constater, la qualité des séquences notamment au début se so
 Grâce à Trinity, on pourra reconstrure les séquences des transcrits dans les cellules étudiées. Ainsi on pourra avoir pour chaque gène exprimé, un ou plusieurs transcrits alternatif. le script utilisé se trouve dans data_quality_control/Trinity.sh.                  
 
 Voici les paramètres utilisés pour Trinity :
+
     - seqType : fq
     - max_memory : 14 GB
     - nombre de coeur CPU : 4
@@ -104,6 +107,7 @@ Cela nous donne un résultat de 311 364, soit 10 fois plus que le nombre de gèn
 Afin de quantifier le résultat obtenu avec Trinity, nous avons utilisé Salmon pour quantifier. Ainsi nous avons utilisé le programme index de Salmon afin de créer en premier lieu une index grâce au résultat de Trinity. Le code utilisé est le fichier salmon_index.sh. 
 
 Voici les paramètres utilisés pour salmon index :
+
     - Entrée : mydata/trinity/Trinity_RF.fasta
     - Sortie : mydata/salmon_index
     - nombre de coeur du CPU : 4
@@ -111,6 +115,7 @@ Voici les paramètres utilisés pour salmon index :
 Cela a été utilisé pour faire la quantification via l'outil quant de Salmon. 
 
 Voici les paramètres utilisés pour salmon quant :
+
     - Type de librairie : -l A
     - Entrée index : mydata/salmon_index
     - Entrée 1 : *R1_paired.fastq.gz de chaque échantillon dans mydata/trimmomatic/
@@ -122,22 +127,30 @@ Voici les paramètres utilisés pour salmon quant :
 # outils utilisés :
 
 FASTQC :
+
   Version : FastQC v0.11.8
+  
   Référence : https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 
 
 Trimmomatic :
+
   Version : 0.39
+  
   Référence : http://www.usadellab.org/cms/?page=trimmomatic
 
 
 Trinity :
+
   Version : Trinity-v2.8.5
+  
   Référence : https://github.com/trinityrnaseq/trinityrnaseq/wiki
 
 
 Salmon :
+
   Version : salmon 0.14.1
+  
   Référence : https://salmon.readthedocs.io/en/latest/salmon.html
 
 
