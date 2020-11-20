@@ -24,7 +24,7 @@ for fichier in $fasta
 do
   fastqc $fichier --outdir mydata/fastqc/original_data \
         --format fastq \
-        --threads 8
+        --threads 4
 done
 
 #j'utilise Trimmomatic pour retirer les mauvais rides des fichier
@@ -63,7 +63,7 @@ done
 #vrai essay: ça télécharge bien sur mydata/trimmomatic
 for n in $boucle
 do
-  java -jar /softwares/Trimmomatic-0.39/trimmomatic-0.39.jar PE -threads 8 -phred33 $input/Lib${n}_31_20_S${n}_R1_001.fastq.gz $input/Lib${n}_31_20_S${n}_R2_001.fastq.gz $output/Lib${n}_31_20_S${n}_R1_paired.fastq.gz $output/Lib${n}_31_20_S${n}_R1_unpaired.fastq.gz $output/Lib${n}_31_20_S${n}_R2_paired.fastq.gz $output/Lib${n}_31_20_S${n}_R2_unpaired.fastq.gz ILLUMINACLIP:${fasta}:2:30:10 HEADCROP:9 MINLEN:100
+  java -jar /softwares/Trimmomatic-0.39/trimmomatic-0.39.jar PE -threads 4 -phred33 $input/Lib${n}_31_20_S${n}_R1_001.fastq.gz $input/Lib${n}_31_20_S${n}_R2_001.fastq.gz $output/Lib${n}_31_20_S${n}_R1_paired.fastq.gz $output/Lib${n}_31_20_S${n}_R1_unpaired.fastq.gz $output/Lib${n}_31_20_S${n}_R2_paired.fastq.gz $output/Lib${n}_31_20_S${n}_R2_unpaired.fastq.gz ILLUMINACLIP:${fasta}:2:30:10 HEADCROP:9 MINLEN:100
 done
 
 
