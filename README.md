@@ -13,7 +13,7 @@ Pour ce faire, nous avons utilisé différents scripts et programmes que l'**on 
 
 En premier lieu, les données sont récupérées via site FTP de la paterforme de séquençage de l'IGFL. Cela fut réalisé grace au script suivant :
 ```
-test
+wget -r --ftp-user=igfl-UE_NGS_2020 --ftp-password=UE_NGS_2020 ftp://sharegate-igfl.ens-lyon.fr/Projet_31_20_UE_NGS_2020/
 ```
 
 Étant donné que les données sont privées, l'identifiant et le mot de passe sont remplacés par XXX et YYY. 
