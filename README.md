@@ -1,4 +1,4 @@
-### TP NGS Bat paillasse 2
+### TP NGS Bat paillasse
 
 readme du projet ngs
 
