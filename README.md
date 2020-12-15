@@ -126,11 +126,11 @@ Voici les paramètres utilisés pour salmon quant :
     - --validateMappings
 
 Voici les résultats obtenus:
-  - "compatible_fragment_ratio": **1.0**,
-  - "num_compatible_fragments": **18.791.541**,
-  - "num_assigned_fragments": **18.791.541**,
-  - "num_frags_with_consistent_mappings": **18.289.808**,
-  - "num_frags_with_inconsistent_or_orphan_mappings": **501.835**. 
+    - "compatible_fragment_ratio": **1.0**,
+    - "num_compatible_fragments": **18.791.541**,
+    - "num_assigned_fragments": **18.791.541**,
+    - "num_frags_with_consistent_mappings": **18.289.808**,
+    - "num_frags_with_inconsistent_or_orphan_mappings": **501.835**. 
 
 En conclusion, nous pouvons y constater que le ratio de fragments compatibles est excellant et que cela est du en premier lieu à un nombre de fragments assigné (qui est égale au nombre de fragments compatibles) qui est élevé (18.791.541), et en second lieu un nombre de fragments avec un "mapping" consistant qui se trouve être très nettement supérieur à celui des "mapping" inconsistants ou orphelins (18.289.808 << 501.835). 
 
@@ -160,30 +160,30 @@ Par la suite, nous avons comparais l'homologie entre le résultat que l'on a obt
 
 Voici les paramètres utilisés pour le téléchargement (utilisant le script wget) :
 
-  - Sortie de téléchargement : mydata/blast/homo
-  - Lien de téléchargement : ftp://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/cds/Homo_sapiens.GRCh38.cds.all.fa.gz
+    - Sortie de téléchargement : mydata/blast/homo
+    - Lien de téléchargement : ftp://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/cds/Homo_sapiens.GRCh38.cds.all.fa.gz
 
 Le fichier obtenu à par la suite été décompresser afin d'utiliser le fichier par la suite via le code gunzip via le paramètre :
 
-  - fichier à décompresser : mydata/blast/homo/Homo_sapiens.GRCh38.cds.fa.gz
+    - fichier à décompresser : mydata/blast/homo/Homo_sapiens.GRCh38.cds.fa.gz
 
   > Puis, nous avons ainsi pu comparais l'homologie en l'Homme et la chauve-souris. Pour cette étape, Le code utilisé est le fichier blastn.sh.
 
 Pour se faire, nous avons d'abord utilisé le logiciel de /softwares/ncbi-blast-2.10.1+/bin/makeblastdb avec comme paramètres :
 
-  - Entrée : mydata/blast/homo/Homo_sapiens.GRCh38.cds.fa
-  - Sortie : mydata/blast/makeblastdb/banque
-  - Type de molecule du fichier cible : -dbtype nucl
-  - -parse_seqids
+    - Entrée : mydata/blast/homo/Homo_sapiens.GRCh38.cds.fa
+    - Sortie : mydata/blast/makeblastdb/banque
+    - Type de molecule du fichier cible : -dbtype nucl
+    - -parse_seqids
 
 Par la suite, nous avons utilisé le logiciel de /softwares/ncbi-blast-2.10.1+/bin/blastn afin de comparer contre homo sapiens la similarité des séquences de chauves-souris obtenues, avec comme paramètres :
 
-  - Entrée du résultat de makeblastdb : mydata/blast/makeblastdb/banque
-  - Entrée du résultat TransDecoder : mydata/transdecoder/Trinity_RF.fasta.transdecoder.cds
-  - Sortie : mydata/blast/blastn/blastn.blast
-  - Expectation value threshold : -evalue 1e-4
-  - Format de sortie : -outfmt 6
-  - Nombre maximal de séquence aligner à conserver : -max_target_seqs 1
+    - Entrée du résultat de makeblastdb : mydata/blast/makeblastdb/banque
+    - Entrée du résultat TransDecoder : mydata/transdecoder/Trinity_RF.fasta.transdecoder.cds
+    - Sortie : mydata/blast/blastn/blastn.blast
+    - Expectation value threshold : -evalue 1e-4
+    - Format de sortie : -outfmt 6
+    - Nombre maximal de séquence aligner à conserver : -max_target_seqs 1
 
 
 
