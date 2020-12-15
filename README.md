@@ -114,7 +114,7 @@ Voici les paramètres utilisés pour salmon index :
     - Sortie : mydata/salmon_index
     - nombre de coeur du CPU : 4
 
-Cela a été utilisé pour faire la quantification via l'outil quant de Salmon. 
+Cela a été utilisé pour faire la quantification via l'outil quant de Salmon. Le code utilisé est le fichier salmon_quant.sh.
 
 Voici les paramètres utilisés pour salmon quant :
 
@@ -124,6 +124,15 @@ Voici les paramètres utilisés pour salmon quant :
     - Entrée 2 : *R2_paired.fastq.gz de chaque échantillon dans mydata/trimmomatic/
     - Sortie : mydata/salmon_quant/
     - --validateMappings
+
+Voici les résultats obtenus:
+  - "compatible_fragment_ratio": **1.0**,
+  - "num_compatible_fragments": **18.791.541**,
+  - "num_assigned_fragments": **18.791.541**,
+  - "num_frags_with_consistent_mappings": **18.289.808**,
+  - "num_frags_with_inconsistent_or_orphan_mappings": **501.835**. 
+
+En conclusion, nous pouvons y constater que le ratio de fragments compatibles est excellant et que cela est du en premier lieu à un nombre de fragments assigné (qui est égale au nombre de fragments compatibles) qui est élevé (18.791.541), et en second lieu un nombre de fragments avec un "mapping" consistant qui se trouve être très nettement supérieur à celui des "mapping" inconsistants ou orphelins (18.289.808 << 501.835). 
 
 # trouver les régions codants :
 
