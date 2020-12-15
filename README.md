@@ -219,13 +219,13 @@ TransDecoder.Predict :
 /softwares/ncbi-blast-2.10.1+/bin/makeblastdb :
 
   - Version : makeblastdb: 2.10.1+ / Package: blast 2.10.1, build May 12 2020 12:15:11
-  - Référence :
+  - Référence : https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastNews
 
 
 /softwares/ncbi-blast-2.10.1+/bin/blastn :
 
-  - Version : makeblastdb: 2.10.1+ / Package: blast 2.10.1, build May 12 2020 12:15:11
-  - Référence :
+  - Version : blastn: 2.10.1+ / Package: blast 2.10.1, build May 12 2020 12:15:11
+  - Référence : https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastNews
 
 
 XXX :
