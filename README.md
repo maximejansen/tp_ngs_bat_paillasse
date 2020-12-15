@@ -126,6 +126,7 @@ Voici les paramètres utilisés pour salmon quant :
     - --validateMappings
 
 Voici les résultats obtenus:
+
     - "compatible_fragment_ratio": **1.0**,
     - "num_compatible_fragments": **18.791.541**,
     - "num_assigned_fragments": **18.791.541**,
