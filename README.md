@@ -125,6 +125,58 @@ Voici les paramètres utilisés pour salmon quant :
     - Sortie : mydata/salmon_quant/
     - --validateMappings
 
+# trouver les régions codants :
+
+Afin d'identifier et d'annoté les régions codant, nous avons utilisé TransDecoder composer de **TransDecoder.LongOrfs** et **TransDecoder.Predict**. Le code utilisé est le fichier transdecoder.sh. 
+
+  > Avec TransDecoder.LongOrfs, nous avons extrait les "long open reading frames" (LongORFs). Voici les différents paramètres utilisés :
+  
+    - Entrée fasta : mydata/trinity/Trinity_RF.fasta
+    - Entrée gene_trans_map : mydata/trinity/Trinity_RF.fasta.gene_trans_map
+    - Sortie de fichier : mydata/transdecoder
+    - Taille minimum de protéines : 100
+    - strand-specific : -S
+    
+  > Avec TransDecoder.Predict, nous avons prédit les régions codant probable. Voici les différents paramètres utilisés :
+  
+    - Entrée fasta : mydata/trinity/Trinity_RF.fasta
+    - Sortie de fichier : mydata/transdecoder
+    - --single_best_only
+
+# Comparaison du transcrit :
+
+Par la suite, nous avons comparais l'homologie entre le résultat que l'on a obtenu après avoir réalisé les scripts TransDecoder, et celui de Homo sapiens. 
+
+  >Pour commencer, il a fallu récupérer les gènes de références de homo sapiens. Pour cette étape, Le code utilisé est le fichier ref_homo.sh. 
+
+Voici les paramètres utilisés pour le téléchargement (utilisant le script wget) :
+
+  - Sortie de téléchargement : mydata/blast/homo
+  - Lien de téléchargement : ftp://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/cds/Homo_sapiens.GRCh38.cds.all.fa.gz
+
+Le fichier obtenu à par la suite été décompresser afin d'utiliser le fichier par la suite via le code gunzip via le paramètre :
+
+  - fichier à décompresser : mydata/blast/homo/Homo_sapiens.GRCh38.cds.fa.gz
+
+  > Puis, nous avons ainsi pu comparais l'homologie en l'Homme et la chauve-souris. Pour cette étape, Le code utilisé est le fichier blastn.sh.
+
+Pour se faire, nous avons d'abord utilisé le logiciel de /softwares/ncbi-blast-2.10.1+/bin/makeblastdb avec comme paramètres :
+
+  - Entrée : mydata/blast/homo/Homo_sapiens.GRCh38.cds.fa
+  - Sortie : mydata/blast/makeblastdb/banque
+  - Type de molecule du fichier cible : -dbtype nucl
+  - -parse_seqids
+
+Par la suite, nous avons utilisé le logiciel de /softwares/ncbi-blast-2.10.1+/bin/blastn afin de comparer contre homo sapiens la similarité des séquences de chauves-souris obtenues, avec comme paramètres :
+
+  - Entrée du résultat de makeblastdb : mydata/blast/makeblastdb/banque
+  - Entrée du résultat TransDecoder : mydata/transdecoder/Trinity_RF.fasta.transdecoder.cds
+  - Sortie : mydata/blast/blastn/blastn.blast
+  - Expectation value threshold : -evalue 1e-4
+  - Format de sortie : -outfmt 6
+  - Nombre maximal de séquence aligner à conserver : -max_target_seqs 1
+
+
 
 # outils utilisés :
 
@@ -152,19 +204,50 @@ Salmon :
   - Référence : https://salmon.readthedocs.io/en/latest/salmon.html
 
 
+TransDecoder.LongOrfs :
+
+  - Version : /softwares/TransDecoder-TransDecoder-v5.5.0/TransDecoder.LongOrfs
+  - Référence : https://github.com/TransDecoder/TransDecoder/wiki
 
 
+TransDecoder.Predict :
+
+  - Version : /softwares/TransDecoder-TransDecoder-v5.5.0/TransDecoder.Predict
+  - Référence : https://github.com/TransDecoder/TransDecoder/wiki
 
 
+/softwares/ncbi-blast-2.10.1+/bin/makeblastdb :
+
+  - Version : makeblastdb: 2.10.1+ / Package: blast 2.10.1, build May 12 2020 12:15:11
+  - Référence :
 
 
+/softwares/ncbi-blast-2.10.1+/bin/blastn :
+
+  - Version : makeblastdb: 2.10.1+ / Package: blast 2.10.1, build May 12 2020 12:15:11
+  - Référence :
 
 
+XXX :
+
+  - Version : 
+  - Référence :
 
 
+XXX :
+
+  - Version : 
+  - Référence :
 
 
+XXX :
+
+  - Version : 
+  - Référence :
 
 
+XXX :
 
+  - Version : 
+  - Référence :
 
