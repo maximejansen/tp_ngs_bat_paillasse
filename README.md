@@ -106,7 +106,7 @@ Cela nous donne un résultat de 311 364, soit 10 fois plus que le nombre de gèn
 
 # Quantification des gènes transcrits :
 
-Afin de quantifier le résultat obtenu avec Trinity, nous avons utilisé Salmon pour quantifier. Ainsi nous avons utilisé le programme index de Salmon afin de créer en premier lieu une index grâce au résultat de Trinity. Le code utilisé est le fichier salmon_index.sh. 
+Afin de quantifier le résultat obtenu avec Trinity, nous avons utilisé Salmon pour quantifier. Ainsi nous avons utilisé le programme index de Salmon afin de créer en premier lieu une index grâce au résultat de Trinity. Le code utilisé est le fichier salmon/salmon_index.sh. 
 
 Voici les paramètres utilisés pour salmon index :
 
@@ -114,7 +114,7 @@ Voici les paramètres utilisés pour salmon index :
     - Sortie : mydata/salmon_index
     - nombre de coeur du CPU : 4
 
-Cela a été utilisé pour faire la quantification via l'outil quant de Salmon. Le code utilisé est le fichier salmon_quant.sh.
+Cela a été utilisé pour faire la quantification via l'outil quant de Salmon. Le code utilisé est le fichier salmon/salmon_quant.sh.
 
 Voici les paramètres utilisés pour salmon quant :
 
@@ -137,7 +137,7 @@ En conclusion, nous pouvons y constater que le ratio de fragments compatibles es
 
 # trouver les régions codants :
 
-Afin d'identifier et d'annoté les régions codant, nous avons utilisé TransDecoder composer de **TransDecoder.LongOrfs** et **TransDecoder.Predict**. Le code utilisé est le fichier transdecoder.sh. 
+Afin d'identifier et d'annoté les régions codant, nous avons utilisé TransDecoder composer de **TransDecoder.LongOrfs** et **TransDecoder.Predict**. Le code utilisé est le fichier comparison/transdecoder/transdecoder.sh. 
 
   > Avec TransDecoder.LongOrfs, nous avons extrait les "long open reading frames" (LongORFs). Voici les différents paramètres utilisés :
   
@@ -157,7 +157,7 @@ Afin d'identifier et d'annoté les régions codant, nous avons utilisé TransDec
 
 Par la suite, nous avons comparais l'homologie entre le résultat que l'on a obtenu après avoir réalisé les scripts TransDecoder, et celui de Homo sapiens. 
 
-  >Pour commencer, il a fallu récupérer les gènes de références de homo sapiens. Pour cette étape, Le code utilisé est le fichier ref_homo.sh. 
+  >Pour commencer, il a fallu récupérer les gènes de références de homo sapiens. Pour cette étape, Le code utilisé est le fichier comparison/blast/ref_homo.sh. 
 
 Voici les paramètres utilisés pour le téléchargement (utilisant le script wget) :
 
@@ -168,7 +168,7 @@ Le fichier obtenu à par la suite été décompresser afin d'utiliser le fichier
 
     - fichier à décompresser : mydata/blast/homo/Homo_sapiens.GRCh38.cds.fa.gz
 
-  > Puis, nous avons ainsi pu comparais l'homologie en l'Homme et la chauve-souris. Pour cette étape, Le code utilisé est le fichier blastn.sh.
+  > Puis, nous avons ainsi pu comparais l'homologie en l'Homme et la chauve-souris. Pour cette étape, Le code utilisé est le fichier comparison/blast/blastn.sh.
 
 Pour se faire, nous avons d'abord utilisé le logiciel de /softwares/ncbi-blast-2.10.1+/bin/makeblastdb avec comme paramètres :
 
