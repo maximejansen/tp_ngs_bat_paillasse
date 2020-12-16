@@ -1,5 +1,5 @@
 ---
-title: "DEseq.rmd"
+title: "DESeq.rmd"
 output: html_document
 ---
 
@@ -13,10 +13,12 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
+En premier lieu, on a besoin d'importer le tximport:
 ```{r tximport}
 library("tximport")
 ```
 
+Puis, on importe les fichiers que l'on va utiliser comme le résultat des salmon_quant fait précédemment, ainsi que gene_trans_map que l'on a obtenu avec Trinity:
 ```{r list file}
 # création de la variable pour la boucle for
 varion <- c(1,2,3,4,5,6)
@@ -32,7 +34,7 @@ for (i in varion) {
 #rajout d'un nom à chaque fichier 
 names(fichier) <- c("Lib1_31_20_S1","Lib2_31_20_S2","Lib3_31_20_S3","Lib4_31_20_S4","Lib5_31_20_S5","Lib6_31_20_S6")
 
-#recuperation de la map dans trinity, modifier le nom et remi les colonnes dans le bon sens pour la suite
+#recuperation de la map dans trinity, modifier les nom de titres et remi les colonnes dans le bon sens pour que la suite se fasse sans problème. 
 trini <- read.table("/ifb/data/mydatalocal/mydata/trinity/Trinity_RF.fasta.gene_trans_map")
 names(trini) <- c("GENEID","TXNAME")
 trini1 <- trini[,c(2,1)]
@@ -41,11 +43,13 @@ trini1 <- trini[,c(2,1)]
 txi <- tximport(fichier, type = "salmon", tx2gene = trini1)
 ```
 
+Avant de lancer de DEseq, on a besoin d'importer la bibliothèque DEseq2:
 ```{r lib_DESeq}
 library("DESeq2")
 
 ```
 
+Puis, après avoir réaliser le data.frame permettant de pouvoir faire le l'analyse (en définissant les contrôles (CTL) et les échantillons avec induction d'IFN (IFN)), j'ai utiliser DESeqDataSetFromTximport affin de compiler les informations dépendamment des conditions :
 ```{r DEseq}
 #creation du data.frame de sample avec nos 2 conditions 
 samp.name <- c("Lib1_31_20_S1","Lib2_31_20_S2","Lib3_31_20_S3","Lib4_31_20_S4","Lib5_31_20_S5","Lib6_31_20_S6")
@@ -58,43 +62,51 @@ ddsTxi <- DESeqDataSetFromTximport(txi,
                                    design = ~ condition)
 ```
 
-
+Les résultats obtenus sont pas la suite compilés avec DESeq puis on récupère les résultats sout forme de tableau grâce à results dans la variable res :
 ```{r DEseq_suite}
-
 dds <- DESeq(ddsTxi)
 res <- results(dds)
 ```
 
-
+Une fois le résultat obtenu, on regarde à quel moment on obtient une différence significative entre les 2 conditions pour des valeur entre eux :
 ```{r exploitation}
-
+# pour 0.1 :
 table(res$padj < 0.1)
-# = 1745
-table(res$padj < 0.05)
-# = 1457
-table(res$padj < 0.001)
 
+# pour 0.05
+table(res$padj < 0.05)
+
+# pour 0.01 :
+table(res$padj < 0.001)
 ```
 
+En première lieu, on peut y constater que lorsque l'on regarde dans la variable res la p-value ajustée, il n'y a que **1 745** transcris en-dessous de 0,1 contre **294 034** au-dessus. Ce nombre est très faible bien que la limite soit assez haute (10 % de faux positifs). Plusieurs facteurs peuvent expliquer cela:
 
+  - Premièrement, il y est possible qu'il y est eu une erreur de manipulation. 
+  - deuxièmement, il se peut que l'on ne peut pas bien mesurer le différence vu que ce n'est pas *in vivo* mais *in vitro*, ou bien que la concentration d'IFN infecté est différente que celle *in vivo*. 
+  - Troisièmement, c'est bien le résultat que l'on obtient et dans ce cas il n'y a que très peu de gènes réguler par l'induction d'IFN. 
 
+Réalisation des figures grâce au résultat obtenu dans la variable res (visible dans le README.md):
 ```{r figure}
 plotMA(res, ylim=c(-2,2))
 vsd <- vst(dds, blind=FALSE)
 plotPCA(vsd, intgroup=c("condition","run"))
 ```
 
+Par la suite, si on regarde la première figure ci-dessus, on peut y constater que les points bleus (avec un différence significative entre le contrôle et l'induction d'IFN) sont majoritairement présents dans la partie du haut, avec énormément qui sortent du cadre (symbolisé par un triangle). Cela signifie que donc la majorité des gènes significativement régulés le sont sur-exprimé par l'induction d'IFN que sous-exprimer.
 
+Concernant la seconde figure, on peut et constater que le Lib3 (qui est l'un des trois contrôles) se trouve avec une différence très élevé par rapport aux deux autres contrôles. Tendit que les trois tests avec l'induction d'IFN sont pour eux tous les trois similaires. Ce résultat est inattendu et pourrait être l'une des explications du faible nombre de gènes réguler par l'induction d'IFN. On a pu constater que cette différence peut être dû par le faite que le troisième contrôle a eu sa banque qui a été à refaire et donc qui n'a pas été fait en même temps que les autres échantillons.
 
-
+Refaire les analyses en enlevant le troisième contrôle pourrait être faite, mais il faut bien prendre en compte que cela risque de fortement diminué la robustesse des analyses car on aura plus que deux contrôles, n'étant pas suffisant pour réaliser correctement un teste statistiques. Nous avons finalement réalisé cela afin de voir si cela est suffisant pour expliquer le faible nombre de transcrit régulier Différentiellement.
 
 
 ## test sans Lib3 car problème dû à une banque qui n'a pas marché et donc fait un autre jour. Juste pour voir. 
 
-
+Mise à part le fait que Lib3 ne soit pas pris en compte ici, c'est exactement les mêmes chose que précédemment (sauf une modification dans la boucle ci-dessous oû elle a été modifiée pour ne pas prendre en compte Lib3) :
 ```{r tximport2}
 library("tximport")
 ```
+
 
 ```{r list file2}
 # création de la variable pour la boucle for
@@ -159,7 +171,7 @@ table(res$padj < 0.05)
 table(res$padj < 0.001)
 ```
 
-
+Nous pouvons ici y constaté que enlever le troisième contrôle n'a affecté que très faiblement le nombre de transcrit qui sont régulé significativement par l'induction d'IFN. Celui-ci reste très faible passant de **1 745** à **1 896**. 
 
 ```{r figure2}
 plotMA(res, ylim=c(-2,2))
@@ -167,14 +179,4 @@ vsd <- vst(dds, blind=FALSE)
 plotPCA(vsd, intgroup=c("condition","run"))
 ```
 
-
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Ici, nous n'y constatons pas vraiment de grosse différence non plus.

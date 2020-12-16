@@ -130,12 +130,31 @@ Voici les paramètres utilisés pour salmon quant :
 Voici les résultats obtenus:
 
   - "compatible_fragment_ratio": **1.0**,
-  - "num_compatible_fragments": **18.791.541**,
-  - "num_assigned_fragments": **18.791.541**,
-  - "num_frags_with_consistent_mappings": **18.289.808**,
-  - "num_frags_with_inconsistent_or_orphan_mappings": **501.835**. 
+  - "num_compatible_fragments": **18,791,541**,
+  - "num_assigned_fragments": **18,791,541**,
+  - "num_frags_with_consistent_mappings": **18,289,808**,
+  - "num_frags_with_inconsistent_or_orphan_mappings": **501,835**. 
 
 En conclusion, nous pouvons y constater que le ratio de fragments compatibles est excellant et que cela est du en premier lieu à un nombre de fragments assigné (qui est égale au nombre de fragments compatibles) qui est élevé (18.791.541), et en second lieu un nombre de fragments avec un "mapping" consistant qui se trouve être très nettement supérieur à celui des "mapping" inconsistants ou orphelins (18.289.808 << 501.835). 
+
+Une fois les résultats obtenus, j'ai réalisé le code suivant afin de voir combien de transcris de gènes sont présents (en prenant pour exemple celui de quant_4) :
+```
+grep "_" mydata/salmon_quant/quant_4/quant.sf |wc -l
+```
+On obtient alors 404 732, soit plus de 10 fois le nombre de gènes codant dans une cellule. 
+
+# comparaison de gènes exprimés entre le contrôle et le INF induction échantillon 
+
+Une fois la quantification réalisée grâce à Salmon, on utilise le script de Deseq2 sur r afin de pouvoir comparer les gènes qui sont sur-exprimé ou sous-exprimé en condition d'induction INF contre le contrôle. Les détaille du code utilisé et les annotations sont dans le fichier Deseq2/Deseq.rmd. 
+
+
+
+
+
+
+
+
+
 
 # trouver les régions codants :
 
@@ -240,10 +259,10 @@ TransDecoder.Predict :
   - Référence : https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastNews
 
 
-XXX :
+tximport :
 
   - Version : 
-  - Référence :
+  - Référence : http://doi.org/10.12688/f1000research.7563
 
 
 XXX :
