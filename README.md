@@ -145,7 +145,7 @@ On obtient alors 404 732, soit plus de 10 fois le nombre de gènes codant dans u
 
 # comparaison de gènes exprimés entre le contrôle et le INF induction échantillon 
 
-Une fois la quantification réalisée grâce à Salmon, on utilise le script de Deseq2 sur r afin de pouvoir comparer les gènes qui sont sur-exprimé ou sous-exprimé en condition d'induction INF contre le contrôle. Les détaille du code utilisé et les annotations sont dans le fichier Deseq2/Deseq.rmd. 
+Une fois la quantification réalisée grâce à Salmon, on utilise le script de Deseq2 sur r afin de pouvoir comparer les gènes qui sont sur-exprimé ou sous-exprimé en condition d'induction INF contre le contrôle. Les détaille du code utilisé et les annotations sont dans le fichier DESeq2/DESeq.rmd. 
 
 
 
