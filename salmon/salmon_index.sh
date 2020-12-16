@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # Dossier par défaut. 
 data="data/mydatalocal"

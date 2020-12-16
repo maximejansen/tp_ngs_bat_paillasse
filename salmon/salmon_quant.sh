@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # Dossier par défaut. 
 data="data/mydatalocal"
@@ -24,6 +24,6 @@ output="mydata/salmon_quant"
 #execution du programme 
 for n in $var
 do
-salmon quant -i $indexon -l A -1 $input/Lib${n}_31_20_S${n}_R1_paired.fastq.gz -2 $input/Lib${n}_31_20_S${n}_R2_paired.fastq.gz --validateMappings -o $output
+salmon quant -i $indexon -l A -1 $input/Lib${n}_31_20_S${n}_R1_paired.fastq.gz -2 $input/Lib${n}_31_20_S${n}_R2_paired.fastq.gz --validateMappings --gcBias -p 4 -o $output/quant_${n}
 done
 

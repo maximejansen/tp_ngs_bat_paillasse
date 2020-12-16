@@ -1,0 +1,180 @@
+---
+title: "DEseq.rmd"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r tximport}
+library("tximport")
+```
+
+```{r list file}
+# création de la variable pour la boucle for
+varion <- c(1,2,3,4,5,6)
+
+#création de la liste de fichier de salmon_quant
+fichier <- c()
+
+#la boucle for pour insérer les fichiers dans la liste "fichier"
+for (i in varion) {
+  fichier[i] <- paste0("/ifb/data/mydatalocal/mydata/salmon_quant/quant_",i,"/quant.sf")
+}
+
+#rajout d'un nom à chaque fichier 
+names(fichier) <- c("Lib1_31_20_S1","Lib2_31_20_S2","Lib3_31_20_S3","Lib4_31_20_S4","Lib5_31_20_S5","Lib6_31_20_S6")
+
+#recuperation de la map dans trinity, modifier le nom et remi les colonnes dans le bon sens pour la suite
+trini <- read.table("/ifb/data/mydatalocal/mydata/trinity/Trinity_RF.fasta.gene_trans_map")
+names(trini) <- c("GENEID","TXNAME")
+trini1 <- trini[,c(2,1)]
+
+#réalisation de tximport dans txi
+txi <- tximport(fichier, type = "salmon", tx2gene = trini1)
+```
+
+```{r lib_DESeq}
+library("DESeq2")
+
+```
+
+```{r DEseq}
+#creation du data.frame de sample avec nos 2 conditions 
+samp.name <- c("Lib1_31_20_S1","Lib2_31_20_S2","Lib3_31_20_S3","Lib4_31_20_S4","Lib5_31_20_S5","Lib6_31_20_S6")
+samp.type <- factor(rep(c("CTL", "IFN"), each = 3))
+samples <- data.frame(run=samp.name,condition=samp.type)
+
+#realization de DEseq2
+ddsTxi <- DESeqDataSetFromTximport(txi,
+                                   colData = samples,
+                                   design = ~ condition)
+```
+
+
+```{r DEseq_suite}
+
+dds <- DESeq(ddsTxi)
+res <- results(dds)
+```
+
+
+```{r exploitation}
+
+table(res$padj < 0.1)
+# = 1745
+table(res$padj < 0.05)
+# = 1457
+table(res$padj < 0.001)
+
+```
+
+
+
+```{r figure}
+plotMA(res, ylim=c(-2,2))
+vsd <- vst(dds, blind=FALSE)
+plotPCA(vsd, intgroup=c("condition","run"))
+```
+
+
+
+
+
+
+## test sans Lib3 car problème dû à une banque qui n'a pas marché et donc fait un autre jour. Juste pour voir. 
+
+
+```{r tximport2}
+library("tximport")
+```
+
+```{r list file2}
+# création de la variable pour la boucle for
+varion <- c(1,2,3,4,5)
+
+#création de la liste de fichier de salmon_quant
+fichier <- c()
+
+#la boucle for pour insérer les fichiers dans la liste "fichier"
+for (i in varion) {
+  if (i > 2) {
+    z = i+1
+    fichier[i] <- paste0("/ifb/data/mydatalocal/mydata/salmon_quant/quant_",z,"/quant.sf")
+  } else {
+    fichier[i] <- paste0("/ifb/data/mydatalocal/mydata/salmon_quant/quant_",i,"/quant.sf")
+  }
+}
+
+#rajout d'un nom à chaque fichier 
+names(fichier) <- c("Lib1_31_20_S1","Lib2_31_20_S2","Lib4_31_20_S4","Lib5_31_20_S5","Lib6_31_20_S6")
+
+#recuperation de la map dans trinity, modifier le nom et remi les colonnes dans le bon sens pour la suite
+trini <- read.table("/ifb/data/mydatalocal/mydata/trinity/Trinity_RF.fasta.gene_trans_map")
+names(trini) <- c("GENEID","TXNAME")
+trini1 <- trini[,c(2,1)]
+
+#réalisation de tximport dans txi
+txi <- tximport(fichier, type = "salmon", tx2gene = trini1)
+```
+
+```{r lib_DESeq2}
+library("DESeq2")
+
+```
+
+```{r DEseq2}
+#creation du data.frame de sample avec nos 2 conditions 
+samp.name <- c("Lib1_31_20_S1","Lib2_31_20_S2","Lib4_31_20_S4","Lib5_31_20_S5","Lib6_31_20_S6")
+samp.type <- factor(c("CTL","CTL","IFN","IFN","IFN"))
+samples <- data.frame(run=samp.name,condition=samp.type)
+
+#realization de DEseq2
+ddsTxi <- DESeqDataSetFromTximport(txi,
+                                   colData = samples,
+                                   design = ~ condition)
+```
+
+
+```{r DEseq_suite2}
+
+dds <- DESeq(ddsTxi)
+res <- results(dds)
+```
+
+
+```{r exploitation2}
+
+table(res$padj < 0.1)
+
+table(res$padj < 0.05)
+
+table(res$padj < 0.001)
+```
+
+
+
+```{r figure2}
+plotMA(res, ylim=c(-2,2))
+vsd <- vst(dds, blind=FALSE)
+plotPCA(vsd, intgroup=c("condition","run"))
+```
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

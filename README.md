@@ -106,15 +106,15 @@ Cela nous donne un résultat de 311 364, soit 10 fois plus que le nombre de gèn
 
 # Quantification des gènes transcrits :
 
-Afin de quantifier le résultat obtenu avec Trinity, nous avons utilisé Salmon pour quantifier. Ainsi nous avons utilisé le programme index de Salmon afin de créer en premier lieu une index grâce au résultat de Trinity. Le code utilisé est le fichier salmon/salmon_index.sh. 
+  >Afin de quantifier le résultat obtenu avec Trinity, nous avons utilisé Salmon pour quantifier. Ainsi nous avons utilisé le programme index de Salmon afin de créer en premier lieu une index grâce au résultat de Trinity. Le code utilisé est le fichier salmon/salmon_index.sh. 
 
 Voici les paramètres utilisés pour salmon index :
 
     - Entrée : mydata/trinity/Trinity_RF.fasta
     - Sortie : mydata/salmon_index
-    - nombre de coeur du CPU : 4
+    - nombre de cœur du CPU : -p 4
 
-Cela a été utilisé pour faire la quantification via l'outil quant de Salmon. Le code utilisé est le fichier salmon/salmon_quant.sh.
+  >Cela a été utilisé pour faire la quantification via l'outil quant de Salmon. Le code utilisé est le fichier salmon/salmon_quant.sh.
 
 Voici les paramètres utilisés pour salmon quant :
 
@@ -123,7 +123,9 @@ Voici les paramètres utilisés pour salmon quant :
     - Entrée 1 : *R1_paired.fastq.gz de chaque échantillon dans mydata/trimmomatic/
     - Entrée 2 : *R2_paired.fastq.gz de chaque échantillon dans mydata/trimmomatic/
     - Sortie : mydata/salmon_quant/
+    - nombre de cœur du CPU : -p 4
     - --validateMappings
+    - --gcBias
 
 Voici les résultats obtenus:
 
@@ -157,7 +159,7 @@ Afin d'identifier et d'annoté les régions codant, nous avons utilisé TransDec
 
 Par la suite, nous avons comparais l'homologie entre le résultat que l'on a obtenu après avoir réalisé les scripts TransDecoder, et celui de Homo sapiens. 
 
-  >Pour commencer, il a fallu récupérer les gènes de références de homo sapiens. Pour cette étape, Le code utilisé est le fichier comparison/blast/ref_homo.sh. 
+  >Pour commencer, il a fallu récupérer les gènes de références de Homo sapiens. Pour cette étape, Le code utilisé est le fichier comparison/blast/ref_homo.sh. 
 
 Voici les paramètres utilisés pour le téléchargement (utilisant le script wget) :
 
@@ -177,7 +179,7 @@ Pour se faire, nous avons d'abord utilisé le logiciel de /softwares/ncbi-blast-
     - Type de molecule du fichier cible : -dbtype nucl
     - -parse_seqids
 
-Par la suite, nous avons utilisé le logiciel de /softwares/ncbi-blast-2.10.1+/bin/blastn afin de comparer contre homo sapiens la similarité des séquences de chauves-souris obtenues, avec comme paramètres :
+Par la suite, nous avons utilisé le logiciel de /softwares/ncbi-blast-2.10.1+/bin/blastn afin de comparer contre Homo sapiens la similarité des séquences de chauves-souris obtenues, avec comme paramètres :
 
     - Entrée du résultat de makeblastdb : mydata/blast/makeblastdb/banque
     - Entrée du résultat TransDecoder : mydata/transdecoder/Trinity_RF.fasta.transdecoder.cds
@@ -186,7 +188,7 @@ Par la suite, nous avons utilisé le logiciel de /softwares/ncbi-blast-2.10.1+/b
     - Format de sortie : -outfmt 6
     - Nombre maximal de séquence aligner à conserver : -max_target_seqs 1
 
-
+De la sorte, nous avons obtenu un fichier sous la forme d'un tableau nommé blastn.blast dans mydata/blast/. Celui-ci contient notamment le nom de chaque transcrit ainsi que le pourcentage d'homologie avec le génome de référence : Homo sapiens.
 
 # outils utilisés :
 
