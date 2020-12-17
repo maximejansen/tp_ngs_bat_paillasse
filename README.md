@@ -83,7 +83,7 @@ Un résultat type avec celui de Lib3_31_20_S3_R1_paired :
 
 Comme on peut le constater, la qualité des séquences notamment au début se sont améliorées, ainsi que les résultats des autres test. Au revanche, on a toujours une légère baisse de Q à la fin des lectures mais c'est classique avec Illumina. Concernant le test "Adapter Content", on est passé de 22% à moins de 2% des séquences qui contient un adaptateur. 
 
-# Trinity :
+# De novo :
 
 Grâce à Trinity, on pourra reconstrure les séquences des transcrits dans les cellules étudiées. Ainsi on pourra avoir pour chaque gène exprimé, un ou plusieurs transcrits alternatif. le script utilisé se trouve dans data_quality_control/Trinity.sh.                  
 
@@ -284,10 +284,10 @@ biomaRt :
   - Version : 2.46.0
   - Référence : https://git.bioconductor.org/packages/biomaRt
 
-XXX :
+GOrilla :
 
-  - Version : 
-  - Référence :
+  - Version : utilisée en date du 17/12/2020
+  - Référence : http://cbl-gorilla.cs.technion.ac.il
 
 
 XXX :
