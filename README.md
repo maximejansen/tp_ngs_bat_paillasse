@@ -151,11 +151,6 @@ Une fois la quantification réalisée grâce à Salmon, on utilise le script de 
 
 
 
-
-
-
-
-
 # trouver les régions codants :
 
 Afin d'identifier et d'annoté les régions codant, nous avons utilisé TransDecoder composer de **TransDecoder.LongOrfs** et **TransDecoder.Predict**. Le code utilisé est le fichier comparison/transdecoder/transdecoder.sh. 
@@ -261,14 +256,14 @@ TransDecoder.Predict :
 
 tximport :
 
-  - Version : 
-  - Référence : http://doi.org/10.12688/f1000research.7563
+  - Version : 1.18.0
+  - Référence : Charlotte Soneson, Michael I. Love, Mark D. Robinson (2015) Differential analyses for RNA-seq: transcript-level estimates improve gene-level inferences. F1000Research. http://doi.org/10.12688/f1000research.7563
 
 
-XXX :
+DESeq2-package :
 
-  - Version : 
-  - Référence :
+  - Version : 1.30.0
+  - Référence : Love, M.I., Huber, W., Anders, S. (2014) Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2. Genome Biology, 15:550. https://doi.org/10.1186/s13059-014-0550-8
 
 
 XXX :
