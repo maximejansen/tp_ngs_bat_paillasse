@@ -143,13 +143,6 @@ grep "_" mydata/salmon_quant/quant_4/quant.sf |wc -l
 ```
 On obtient alors 404 732, soit plus de 10 fois le nombre de gènes codant dans une cellule. 
 
-# comparaison de gènes exprimés entre le contrôle et le INF induction échantillon 
-
-Une fois la quantification réalisée grâce à Salmon, on utilise le script de Deseq2 sur r afin de pouvoir comparer les gènes qui sont sur-exprimé ou sous-exprimé en condition d'induction INF contre le contrôle. Les détaille du code utilisé et les annotations sont dans le fichier DESeq2/DESeq.rmd. 
-
-
-
-
 
 # trouver les régions codants :
 
@@ -203,6 +196,20 @@ Par la suite, nous avons utilisé le logiciel de /softwares/ncbi-blast-2.10.1+/b
     - Nombre maximal de séquence aligner à conserver : -max_target_seqs 1
 
 De la sorte, nous avons obtenu un fichier sous la forme d'un tableau nommé blastn.blast dans mydata/blast/. Celui-ci contient notamment le nom de chaque transcrit ainsi que le pourcentage d'homologie avec le génome de référence : Homo sapiens.
+
+
+# comparaison de gènes exprimés entre le contrôle et le INF induction échantillon 
+
+Une fois la quantification réalisée grâce à Salmon, on utilise le script de Deseq2 sur r afin de pouvoir comparer les gènes qui sont sur-exprimé ou sous-exprimé en condition d'induction INF contre le contrôle. Les détaille du code utilisé et les annotations sont dans le fichier DESeq2/DESeq.rmd. Les graphiques de cette partie y seront disponibles sur DESeq.html. 
+
+A partir de du point "# La comparaison" de DESeq2/DESeq.rmd, les graphiques sont stockés dans graphic_NGS, créé par GOrilla à partir des jeu de données téléchargées allreg, upreg et downreg (ech6) (ou de la version "x" pour ech5) sur le téléchargement all.csv (pour ech6 our bien la version "x" pour ech5). On observe pas une grande différence pour ech6 par port au jeu de données ech5. 
+
+Cependant, nous pouvons constater que c'est uniquement la "sur transcription"  qui a un effet significatif sur les différentes fonctions et process de la cellule. 
+  - Concernant le processus moléculaire, nous pouvons constater différents facteurs qui sont très significativement modifié. En premier lieu la réponse immunitaire que ce soit contre les virus (se trouve très particulièrement activé notamment sur la plupart des processus où que la lutte contre le virus sont importants) mais aussi contre tout type de pathogènes et tout activation du système immunitaire se voit de façon générale activée. Bien entendu, cela active aussi la régulation de différents types d'interféron.
+  - concernant les fonctions cellulaires, ce sera surtout ceux qui impact l'activité catalytique qui sera le plus différentiellement réguler. Cependant, la p-value reste assez élevé par rapport à précédemment montrant que cela est bien moins impacté que les processus moléculaire.
+  - enfin, concernant les composants cellulaires, ce sera surtout ceux qui qui se situ au niveau de la partie endosomale et la membrane endosomale qui y sera différentiellement réguler.
+
+
 
 # outils utilisés :
 
@@ -265,6 +272,39 @@ DESeq2-package :
   - Version : 1.30.0
   - Référence : Love, M.I., Huber, W., Anders, S. (2014) Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2. Genome Biology, 15:550. https://doi.org/10.1186/s13059-014-0550-8
 
+
+BiocManager :
+
+  - Version : 1.30.10
+  - Référence : https://github.com/Bioconductor/BiocManager
+
+
+biomaRt :
+
+  - Version : 2.46.0
+  - Référence : https://git.bioconductor.org/packages/biomaRt
+
+XXX :
+
+  - Version : 
+  - Référence :
+
+
+XXX :
+
+  - Version : 
+  - Référence :
+
+XXX :
+
+  - Version : 
+  - Référence :
+
+
+XXX :
+
+  - Version : 
+  - Référence :
 
 XXX :
 

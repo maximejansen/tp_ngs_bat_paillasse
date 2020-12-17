@@ -181,7 +181,7 @@ plotPCA(vsdx, intgroup=c("condition","run"))
 
 Ici, nous n'y constatons pas vraiment de grosse différence non plus.
 
-
+# La comparaison
 
 ## Réalisation d'une combination de nos résultats de res avec les gènes d'Homo sapiens
 
@@ -213,13 +213,14 @@ blastHomo <- blastHomo[, c("gene", "alttr") := tstrsplit(V1, "_i", fixed=TRUE)][
 blastHomo1 <- blastHomo%>% group_by(gene)%>% slice_max(order_by = V12, n = 1, with_ties = TRUE)
 blastHomoName <- merge(tx2geneHomo,blastHomo1,by.x="ensembl_transcript_id",by.y="trid")
 blastHomoNameUniq <- unique(blastHomoName[,c("ensembl_gene_id","external_gene_name","gene")])
+
 # associate our DE results with gene names from human
 resUsName=merge(res,blastHomoNameUniq,by.x=0,by.y="gene")
 ```
 
 
 Afin de pouvoir analyser uniquement pour les gènes sur- ou sous-réguler ou les 2, j'ai réaliser les codes suivants pour spécifiquement 5 % d'erreurs :
-```{r}
+```{identification}
 #pour sur-stranscrit
 UpReg <- filter(resUsName, padj<0.05 & resUsName$log2FoldChange>0)
 UpReg
@@ -236,7 +237,7 @@ AllReg
 
 
 Téléchargement des données afin de regarder quelle sont les processus et fonction moléculaire ainsi que les compartiments cellulaires impacter 
-```{r}
+```{téléchargement}
 write.csv(as.data.frame(unique(resUsName$external_gene_name)), 
           file="/ifb/data/mydatalocal/download/name_all.csv",quote=FALSE,row.names = FALSE)
 
@@ -248,7 +249,6 @@ write.csv(as.data.frame(unique(DownReg$external_gene_name)),
 
 write.csv(as.data.frame(unique(AllReg$external_gene_name)), 
           file="/ifb/data/mydatalocal/download/name_allreg.csv",quote=FALSE,row.names = FALSE)
-
 ```
 
 # pour sans le CTL3 :
@@ -279,7 +279,7 @@ resUsNamex=merge(as.data.frame(resx),blastHomoNameUniq,by.x=0,by.y="gene")
 
 
 Afin de pouvoir analyser uniquement pour les gènes sur- ou sous-réguler ou les 2, j'ai réaliser les codes suivants pour spécifiquement 5 % d'erreurs :
-```{r}
+```{identification 2}
 #pour sur-stranscrit
 UpRegx <- filter(resUsNamex, padj<0.05 & resUsName$log2FoldChange>0)
 UpRegx
@@ -294,9 +294,8 @@ AllRegx
 ```
 
 
-
 Téléchargement des données afin de regarder quelle sont les processus et fonction moléculaire ainsi que les compartiments cellulaires impacter 
-```{r}
+```{téléchargement 2}
 write.csv(as.data.frame(unique(resUsNamex$external_gene_name)), 
           file="/ifb/data/mydatalocal/download/name_allx.csv",quote=FALSE,row.names = FALSE)
 
@@ -313,33 +312,54 @@ write.csv(as.data.frame(unique(AllRegx$external_gene_name)),
 
 
 
+## Comparaison entre le groupe sans (ech5) ou avec (ech6) le contrôle 3
 
-
-```{r}
+Ici, je compare donc ses 2 groupes afin de voir si il y a une différence entre eux au niveau des différences de transcriptions IFN/CTL de ech5 et ech6:
+```{comparaison avec/sans }
 AllresUs=merge(as.data.frame(res),as.data.frame(resx),by.x=0,by.y=0)
-UsresTable <- table(AllresUs$padj.x<0.05,AllresUs$padj.y<0.05)
-UsresTable <- table(echo6=AllresUs$padj.x<0.05,echo5=AllresUs$padj.y<0.05)
+UsresTable <- table(ech6=AllresUs$padj.x<0.05,ech5=AllresUs$padj.y<0.05)
+UsresTable
+#résultat:
+#     echo5
+#echo6    FALSE   TRUE
+#  FALSE 287634    358
+#  TRUE     145   1312
 ```
+Nous pouvons ainsi y constaté que bien que 1312 gènes sont exprimés différemment lors de l'induction d'IFN par rapport au contrôle dans les deux cas, il y a 145 qui le sont uniquement pour l'ech5 et 358 pour ech6.
 
 
 
+## Comparaison du groupe ech6 contre des donnée similaire de d'autres personnes:
 
-
-
+Ici, on normalise les données récupérées de l'autre groupe afin de pouvoir par la suite le comparer avec notre résultat :
 ```{r}
+# téléchargement des données
 resBatHolzer<-read.csv("https://www.rna.uni-jena.de/supplements/mda/data/deseq2/RNA/Mock_6h_RNA_vs_IFN_6h_RNA/deseq2_Mock_6h_RNA_IFN_6h_RNA_full.csv")
+
+# Normalisation du nom
 colnames(resBatHolzer)[2] <- c("external_gene_name") #change column name to be the same as ours
+
+# conjugaison avec notre résultat à fin de comparer
 CommonGenesUsHolze <- merge(resUsName,resBatHolzer,by="external_gene_name") #11364 genes in common
 ```
 
-
+Réalisation du Pearson's Chi-squared test entre notre et leurs résultats :
 ```{r}
+# détermination de si notre résultat est sous- ou sur- réguler ou bien non réguler
 CommonGenesUsHolze$ourTest="nonreg"
 CommonGenesUsHolze$ourTest[CommonGenesUsHolze$padj.x<0.05&CommonGenesUsHolze$log2FoldChange.x>0]="Up"
 CommonGenesUsHolze$ourTest[CommonGenesUsHolze$padj.x<0.05&CommonGenesUsHolze$log2FoldChange.x<0]="Down"
+
+# détermination de si leur résultat est sous- ou sur- réguler ou bien non réguler
 CommonGenesUsHolze$theirTest="nonreg"
 CommonGenesUsHolze$theirTest[CommonGenesUsHolze$padj.y<0.05&CommonGenesUsHolze$log2FoldChange.y>0]="Up"
 CommonGenesUsHolze$theirTest[CommonGenesUsHolze$padj.y<0.05&CommonGenesUsHolze$log2FoldChange.y<0]="Down"
 chisq.test(table(us=CommonGenesUsHolze$ourTest,them=CommonGenesUsHolze$theirTest))
-```
 
+#Résultat :
+#	Pearson's Chi-squared test
+#
+#data:  table(us = CommonGenesUsHolze$ourTest, them = CommonGenesUsHolze$theirTest)
+#X-squared = 1717.2, df = 4, p-value < 2.2e-16
+```
+Nous pouvons ainsi y voir tu la p-value est très faible. De se fête, cela signifie qu'il y a très peu de chances que si il y a une différence que cela soit du au hasard.

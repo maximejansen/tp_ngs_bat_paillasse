@@ -1,0 +1,2 @@
+GO Term	Description	P-value	FDR q-value	Enrichment	N	B	n	b	Genes
+GO:0016831	carboxy-lyase activity	6.31E-4	1E0	9.95	10740	26	166	4	[PCK2  -  phosphoenolpyruvate carboxykinase 2 (mitochondrial), ODC1  -  ornithine decarboxylase 1, ECHDC1  -  enoyl coa hydratase domain containing 1, GOT1  -  glutamic-oxaloacetic transaminase 1, soluble]
