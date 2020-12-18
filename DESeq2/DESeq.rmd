@@ -398,12 +398,6 @@ CommonGenesUsHolze$theirTest="nonreg"
 CommonGenesUsHolze$theirTest[CommonGenesUsHolze$padj.y<0.05&CommonGenesUsHolze$log2FoldChange.y>0]="Up"
 CommonGenesUsHolze$theirTest[CommonGenesUsHolze$padj.y<0.05&CommonGenesUsHolze$log2FoldChange.y<0]="Down"
 chisq.test(table(us=CommonGenesUsHolze$ourTest,them=CommonGenesUsHolze$theirTest))
-
-#Résultat :
-#	Pearson's Chi-squared test
-#
-#data:  table(us = CommonGenesUsHolze$ourTest, them = CommonGenesUsHolze$theirTest)
-#X-squared = 1717.2, df = 4, p-value < 2.2e-16
 ```
 Nous pouvons ainsi y voir tu la p-value est très faible. De se fête, cela signifie qu'il y a très peu de chances que si il y a une différence que cela soit du au hasard.
 
