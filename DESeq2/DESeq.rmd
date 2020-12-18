@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## R Markdown
 
 En premier lieu, on a besoin d'importer le tximport:
-```{r tximport}
+```{r tximport, results="hide"}
 library("tximport")
 ```
 
@@ -40,7 +40,7 @@ txi <- tximport(fichier, type = "salmon", tx2gene = trini1)
 ```
 
 Avant de lancer de DEseq, on a besoin d'importer la bibliothèque DEseq2:
-```{r lib_DESeq}
+```{r lib_DESeq, results="hide"}
 library("DESeq2")
 
 ```
@@ -99,7 +99,7 @@ Refaire les analyses en enlevant le troisième contrôle pourrait être faite, m
 ## test sans Lib3 car problème dû à une banque qui n'a pas marché et donc fait un autre jour. Juste pour voir. 
 
 Mise à part le fait que Lib3 ne soit pas pris en compte ici, c'est exactement les mêmes chose que précédemment (sauf une modification dans la boucle ci-dessous oû elle a été modifiée pour ne pas prendre en compte Lib3) :
-```{r tximport2}
+```{r tximport2, results="hide"}
 library("tximport")
 ```
 
@@ -133,7 +133,7 @@ trinix1 <- trinix[,c(2,1)]
 txix <- tximport(fichierx, type = "salmon", tx2gene = trinix1)
 ```
 
-```{r lib_DESeq2}
+```{r lib_DESeq2, results="hide"}
 library("DESeq2")
 
 ```
@@ -182,23 +182,23 @@ Ici, nous n'y constatons pas vraiment de grosse différence non plus.
 ## Réalisation d'une combination de nos résultats de res avec les gènes d'Homo sapiens
 
 Pour commencer, nous devons installer BiocManager et biomaRt:
-```{r installation}
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install("biomaRt")
+```{r installation, results="hide"}
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+#BiocManager::install("biomaRt")
 library(biomaRt)
 ```
 
 Puis, nous avons importé les bibliothèques suivantes pour la suite :
-```{r library}
+```{r library, results="hide"}
 library(dplyr)
 library(tidyr)
-library(data.table)
 library(ggplot2)
+library(data.table)
 ```
 
 Ici, nous avons lancé le mélange entre res et Homo sapiens :
-```{merge blast personnel avec Homo}
+```{r erge blast personnel avec Homo}
 ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 tx2geneHomo = biomaRt::getBM(attributes=c('ensembl_transcript_id', 
                                       'ensembl_gene_id', 'external_gene_name'),mart=ensembl)
@@ -211,29 +211,29 @@ blastHomoName <- merge(tx2geneHomo,blastHomo1,by.x="ensembl_transcript_id",by.y=
 blastHomoNameUniq <- unique(blastHomoName[,c("ensembl_gene_id","external_gene_name","gene")])
 
 # associate our DE results with gene names from human
-resUsName=merge(res,blastHomoNameUniq,by.x=0,by.y="gene")
+resUsName=merge(as.data.frame(res),blastHomoNameUniq,by.x=0,by.y="gene")
 ```
 
 
 Afin de pouvoir analyser uniquement pour les gènes sur- ou sous-réguler ou les 2, j'ai réaliser les codes suivants pour spécifiquement 5 % d'erreurs :
-```{identification}
+```{r identification}
 #pour sur-stranscrit
 UpReg <- filter(resUsName, padj<0.05 & resUsName$log2FoldChange>0)
-UpReg
+head(UpReg)
 
 #pour sous-transcrit 
 DownReg <- filter(resUsName, padj<0.05 & resUsName$log2FoldChange<0)
-DownReg
+head(DownReg)
 
 #pour tous les significativement transcrit différemment
 AllReg <- filter(resUsName, padj<0.05)
-AllReg
+head(AllReg)
 ```
 
 
 
 Téléchargement des données afin de regarder quelle sont les processus et fonction moléculaire ainsi que les compartiments cellulaires impacter 
-```{téléchargement}
+```{r téléchargement}
 write.csv(as.data.frame(unique(resUsName$external_gene_name)), 
           file="/ifb/data/mydatalocal/download/name_all.csv",quote=FALSE,row.names = FALSE)
 
@@ -250,7 +250,7 @@ write.csv(as.data.frame(unique(AllReg$external_gene_name)),
 # pour sans le CTL3 :
 
 Puis, nous avons importé les bibliothèques suivantes pour la suite :
-```{r library}
+```{r library2, results="hide"}
 library(dplyr)
 library(tidyr)
 library(data.table)
@@ -258,7 +258,7 @@ library(ggplot2)
 ```
 
 Ici, nous avons lancé le mélange entre res et Homo sapiens :
-```{merge blast personnel avec Homo}
+```{r merge blast personnel avec Homo2}
 ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
 tx2geneHomo = biomaRt::getBM(attributes=c('ensembl_transcript_id', 
                                       'ensembl_gene_id', 'external_gene_name'),mart=ensembl)
@@ -275,23 +275,23 @@ resUsNamex=merge(as.data.frame(resx),blastHomoNameUniq,by.x=0,by.y="gene")
 
 
 Afin de pouvoir analyser uniquement pour les gènes sur- ou sous-réguler ou les 2, j'ai réaliser les codes suivants pour spécifiquement 5 % d'erreurs :
-```{identification 2}
+```{r identification 2}
 #pour sur-stranscrit
 UpRegx <- filter(resUsNamex, padj<0.05 & resUsName$log2FoldChange>0)
-UpRegx
+head(UpRegx)
 
 #pour sous-transcrit 
 DownRegx <- filter(resUsNamex, padj<0.05 & resUsName$log2FoldChange<0)
-DownRegx
+head(DownRegx)
 
 #pour tous les significativement transcrit différemment
 AllRegx <- filter(resUsNamex, padj<0.05)
-AllRegx
+head(AllRegx)
 ```
 
 
 Téléchargement des données afin de regarder quelle sont les processus et fonction moléculaire ainsi que les compartiments cellulaires impacter 
-```{téléchargement 2}
+```{r telechargement 2}
 write.csv(as.data.frame(unique(resUsNamex$external_gene_name)), 
           file="/ifb/data/mydatalocal/download/name_allx.csv",quote=FALSE,row.names = FALSE)
 
@@ -305,30 +305,77 @@ write.csv(as.data.frame(unique(AllRegx$external_gene_name)),
           file="/ifb/data/mydatalocal/download/name_allregx.csv",quote=FALSE,row.names = FALSE)
 
 ```
-
+**à continuer sur le README.md avant de continuer ici**
 
 
 ## Comparaison entre le groupe sans (ech5) ou avec (ech6) le contrôle 3
 
 Ici, je compare donc ses 2 groupes afin de voir si il y a une différence entre eux au niveau des différences de transcriptions IFN/CTL de ech5 et ech6:
-```{comparaison avec/sans }
+```{r comparaison avec vs sans }
 AllresUs=merge(as.data.frame(res),as.data.frame(resx),by.x=0,by.y=0)
 UsresTable <- table(ech6=AllresUs$padj.x<0.05,ech5=AllresUs$padj.y<0.05)
 UsresTable
-#résultat:
-#     echo5
-#echo6    FALSE   TRUE
-#  FALSE 287634    358
-#  TRUE     145   1312
 ```
 Nous pouvons ainsi y constaté que bien que 1312 gènes sont exprimés différemment lors de l'induction d'IFN par rapport au contrôle dans les deux cas, il y a 145 qui le sont uniquement pour l'ech5 et 358 pour ech6.
+
+
+## Analyse de l'expression des gène dans chaque échantillon 
+
+Par la suite, nous avons réalisé une pheatmap surtout les champs les échantillons avec uniquement soit les valeurs qui sont significativement sur ou sous réguler à 95 % avec un fold change supérieur à 4.
+
+Pour commencer, il nous a fallu installer le package :
+```{r installon, results="hide"}
+install.packages("pheatmap")
+ 
+# load package
+library(pheatmap)
+```
+
+Une fois cela fait, nous avons pu réaliser la pheatmap pour les gènes sur-réguler avec unlog2FoldChange > 4:
+```{r pheatmap}
+# selection des gène significativement sur-réguler
+select <- na.omit(resUsName$Row.names[resUsName$padj<0.05 & resUsName$log2FoldChange>4])
+#select <-select[1:10] #pas utile
+
+#définition des nom
+row.names(samples)=samples$run
+resUsNameVsd <- merge(as.data.frame(resUsName),assay(vsd),by.x="Row.names",by.y=0)
+row.names(resUsNameVsd) <- resUsNameVsd$Row.names
+
+#création de la pheatmap
+h=pheatmap(resUsNameVsd[select,10:15], cluster_rows=TRUE, show_rownames=TRUE,show_colnames=FALSE,
+           cluster_cols=FALSE, annotation_col=samples, labels_row=resUsNameVsd[select,"external_gene_name"],fontsize_row=5)
+h
+ggsave(h,file="heatmapUpReg.png")
+```
+Nous pouvons ici il constaté, en premier lieu, que (principalement dans la partie du haut) on a bel et bien une différence au niveau de l'expression des gènes entre l'induction d'IFN et le contrôle. Par ailleurs, comme on a pu le voir précédemment, le contrôle numéro trois possède bien une différence d'expression qui est différent des deux autres contrôles bien que celui-ci reste moins fort que pour le cas de l'induction d'IFN pour les trois échantillons.
+
+Puis, nous avons réaliser la pheatmap pour les gènes sous-réguler avec un log2FoldChange < -1:
+```{r pheatmap2}
+# selection des gène significativement sous-réguler
+select2 <- na.omit(resUsName$Row.names[resUsName$padj<0.05 & resUsName$log2FoldChange<(-1)])
+#select2 <-select[1:10] #pas utile
+
+#définition des nom
+row.names(samples)=samples$run
+resUsNameVsd <- merge(as.data.frame(resUsName),assay(vsd),by.x="Row.names",by.y=0)
+row.names(resUsNameVsd) <- resUsNameVsd$Row.names
+
+#création de la pheatmap
+h=pheatmap(resUsNameVsd[select2,10:15], cluster_rows=TRUE, show_rownames=TRUE,show_colnames=FALSE,
+           cluster_cols=FALSE, annotation_col=samples, labels_row=resUsNameVsd[select,"external_gene_name"],fontsize_row=5)
+h
+ggsave(h,file="heatmapDownReg.png")
+```
+En premier lieu, je tiens a préciser que l'on a fait l'analyse pour log2FoldChange < -1 car pour un log2FoldChange plus bas, il n'y a de possibilité de faire le graphique pour manque de données. Cela peut ainsi expliquer pourquoi il n'y a pas une très grande différence pour les gènes sous réguler au niveau de la transcription de ces derniers. Cette analyse nous confiant dans le faite Que l'induction interféron a un impact positif principalement sur l'expression de certains gènes et non de la négative régulation.
+
 
 
 
 ## Comparaison du groupe ech6 contre des donnée similaire de d'autres personnes:
 
 Ici, on normalise les données récupérées de l'autre groupe afin de pouvoir par la suite le comparer avec notre résultat :
-```{r}
+```{r test}
 # téléchargement des données
 resBatHolzer<-read.csv("https://www.rna.uni-jena.de/supplements/mda/data/deseq2/RNA/Mock_6h_RNA_vs_IFN_6h_RNA/deseq2_Mock_6h_RNA_IFN_6h_RNA_full.csv")
 
@@ -340,7 +387,7 @@ CommonGenesUsHolze <- merge(resUsName,resBatHolzer,by="external_gene_name") #113
 ```
 
 Réalisation du Pearson's Chi-squared test entre notre et leurs résultats :
-```{r}
+```{r test part 2}
 # détermination de si notre résultat est sous- ou sur- réguler ou bien non réguler
 CommonGenesUsHolze$ourTest="nonreg"
 CommonGenesUsHolze$ourTest[CommonGenesUsHolze$padj.x<0.05&CommonGenesUsHolze$log2FoldChange.x>0]="Up"
@@ -359,3 +406,9 @@ chisq.test(table(us=CommonGenesUsHolze$ourTest,them=CommonGenesUsHolze$theirTest
 #X-squared = 1717.2, df = 4, p-value < 2.2e-16
 ```
 Nous pouvons ainsi y voir tu la p-value est très faible. De se fête, cela signifie qu'il y a très peu de chances que si il y a une différence que cela soit du au hasard.
+
+
+
+
+
+
