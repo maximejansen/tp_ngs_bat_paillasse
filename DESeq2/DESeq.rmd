@@ -10,12 +10,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ## R Markdown
 
 En premier lieu, on a besoin d'importer le tximport:
-```{r tximport, results="hide"}
+```{r tximport, results='hide'}
 library("tximport")
 ```
 
 Puis, on importe les fichiers que l'on va utiliser comme le résultat des salmon_quant fait précédemment, ainsi que gene_trans_map que l'on a obtenu avec Trinity:
-```{r list file}
+```{r list file, results='hide'}
 # création de la variable pour la boucle for
 varion <- c(1,2,3,4,5,6)
 
@@ -40,7 +40,7 @@ txi <- tximport(fichier, type = "salmon", tx2gene = trini1)
 ```
 
 Avant de lancer de DEseq, on a besoin d'importer la bibliothèque DEseq2:
-```{r lib_DESeq, results="hide"}
+```{r lib_DESeq, results='hide'}
 library("DESeq2")
 
 ```
@@ -64,7 +64,7 @@ dds <- DESeq(ddsTxi)
 res <- results(dds)
 ```
 
-Une fois le résultat obtenu, on regarde à quel moment on obtient une différence significative entre les 2 conditions pour des valeur entre eux :
+Une fois le résultat obtenu, on regarde à quel moment on obtient une différence significative entre les 2 conditions pour des valeur entre eux (**il s'agit de là de la p-value ajusté = padj**) :
 ```{r exploitation}
 # pour 0.1 :
 table(res$padj < 0.1)
@@ -99,12 +99,12 @@ Refaire les analyses en enlevant le troisième contrôle pourrait être faite, m
 ## test sans Lib3 car problème dû à une banque qui n'a pas marché et donc fait un autre jour. Juste pour voir. 
 
 Mise à part le fait que Lib3 ne soit pas pris en compte ici, c'est exactement les mêmes chose que précédemment (sauf une modification dans la boucle ci-dessous oû elle a été modifiée pour ne pas prendre en compte Lib3) :
-```{r tximport2, results="hide"}
+```{r tximport2, results='hide'}
 library("tximport")
 ```
 
 
-```{r list file2}
+```{r list file2, results='hide'}
 # création de la variable pour la boucle for
 varionx <- c(1,2,3,4,5)
 
@@ -133,7 +133,7 @@ trinix1 <- trinix[,c(2,1)]
 txix <- tximport(fichierx, type = "salmon", tx2gene = trinix1)
 ```
 
-```{r lib_DESeq2, results="hide"}
+```{r lib_DESeq2, results='hide'}
 library("DESeq2")
 
 ```
@@ -159,11 +159,13 @@ resx <- results(ddsx)
 
 
 ```{r exploitation2}
-
+# pour 0.1 :
 table(resx$padj < 0.1)
 
+# pour 0.05 :
 table(resx$padj < 0.05)
 
+# pour 0.01 :
 table(resx$padj < 0.001)
 ```
 
@@ -182,7 +184,7 @@ Ici, nous n'y constatons pas vraiment de grosse différence non plus.
 ## Réalisation d'une combination de nos résultats de res avec les gènes d'Homo sapiens
 
 Pour commencer, nous devons installer BiocManager et biomaRt:
-```{r installation, results="hide"}
+```{r installation, results='hide'}
 #if (!requireNamespace("BiocManager", quietly = TRUE))
 #    install.packages("BiocManager")
 #BiocManager::install("biomaRt")
@@ -190,7 +192,7 @@ library(biomaRt)
 ```
 
 Puis, nous avons importé les bibliothèques suivantes pour la suite :
-```{r library, results="hide"}
+```{r library, results='hide'}
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -215,7 +217,7 @@ resUsName=merge(as.data.frame(res),blastHomoNameUniq,by.x=0,by.y="gene")
 ```
 
 
-Afin de pouvoir analyser uniquement pour les gènes sur- ou sous-réguler ou les 2, j'ai réaliser les codes suivants pour spécifiquement 5 % d'erreurs :
+Afin de pouvoir analyser uniquement pour les gènes sur- ou sous-réguler ou les 2, j'ai réaliser les codes suivants pour spécifiquement 5 % d'erreurs avec la p-value ajusté :
 ```{r identification}
 #pour sur-stranscrit
 UpReg <- filter(resUsName, padj<0.05 & resUsName$log2FoldChange>0)
@@ -250,7 +252,7 @@ write.csv(as.data.frame(unique(AllReg$external_gene_name)),
 # pour sans le CTL3 :
 
 Puis, nous avons importé les bibliothèques suivantes pour la suite :
-```{r library2, results="hide"}
+```{r library2, results='hide'}
 library(dplyr)
 library(tidyr)
 library(data.table)
@@ -274,7 +276,7 @@ resUsNamex=merge(as.data.frame(resx),blastHomoNameUniq,by.x=0,by.y="gene")
 ```
 
 
-Afin de pouvoir analyser uniquement pour les gènes sur- ou sous-réguler ou les 2, j'ai réaliser les codes suivants pour spécifiquement 5 % d'erreurs :
+Afin de pouvoir analyser uniquement pour les gènes sur- ou sous-réguler ou les 2, j'ai réaliser les codes suivants pour spécifiquement 5 % d'erreurs avec la p-value ajusté :
 ```{r identification 2}
 #pour sur-stranscrit
 UpRegx <- filter(resUsNamex, padj<0.05 & resUsName$log2FoldChange>0)
@@ -324,7 +326,7 @@ Nous pouvons ainsi y constaté que bien que 1312 gènes sont exprimés différem
 Par la suite, nous avons réalisé une pheatmap surtout les champs les échantillons avec uniquement soit les valeurs qui sont significativement sur ou sous réguler à 95 % avec un fold change supérieur à 4.
 
 Pour commencer, il nous a fallu installer le package :
-```{r installon, results="hide"}
+```{r installon, results='hide'}
 install.packages("pheatmap")
  
 # load package

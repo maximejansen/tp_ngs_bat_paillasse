@@ -496,7 +496,7 @@ ddsTxi &lt;- DESeqDataSetFromTximport(txi,
 <pre><code>## final dispersion estimates</code></pre>
 <pre><code>## fitting model and testing</code></pre>
 <pre class="r"><code>res &lt;- results(dds)</code></pre>
-<p>Une fois le résultat obtenu, on regarde à quel moment on obtient une différence significative entre les 2 conditions pour des valeur entre eux :</p>
+<p>Une fois le résultat obtenu, on regarde à quel moment on obtient une différence significative entre les 2 conditions pour des valeur entre eux (<strong>il s’agit de là de la p-value ajusté = padj</strong>) :</p>
 <pre class="r"><code># pour 0.1 :
 table(res$padj &lt; 0.1)</code></pre>
 <pre><code>## 
@@ -583,15 +583,18 @@ ddsTxix &lt;- DESeqDataSetFromTximport(txix,
 <pre><code>## final dispersion estimates</code></pre>
 <pre><code>## fitting model and testing</code></pre>
 <pre class="r"><code>resx &lt;- results(ddsx)</code></pre>
-<pre class="r"><code>table(resx$padj &lt; 0.1)</code></pre>
+<pre class="r"><code># pour 0.1 :
+table(resx$padj &lt; 0.1)</code></pre>
 <pre><code>## 
 ##  FALSE   TRUE 
 ## 287553   1896</code></pre>
-<pre class="r"><code>table(resx$padj &lt; 0.05)</code></pre>
+<pre class="r"><code># pour 0.05 :
+table(resx$padj &lt; 0.05)</code></pre>
 <pre><code>## 
 ##  FALSE   TRUE 
 ## 287779   1670</code></pre>
-<pre class="r"><code>table(resx$padj &lt; 0.001)</code></pre>
+<pre class="r"><code># pour 0.01 :
+table(resx$padj &lt; 0.001)</code></pre>
 <pre><code>## 
 ##  FALSE   TRUE 
 ## 288464    985</code></pre>
@@ -685,7 +688,7 @@ blastHomoNameUniq &lt;- unique(blastHomoName[,c(&quot;ensembl_gene_id&quot;,&quo
 
 # associate our DE results with gene names from human
 resUsName=merge(as.data.frame(res),blastHomoNameUniq,by.x=0,by.y=&quot;gene&quot;)</code></pre>
-<p>Afin de pouvoir analyser uniquement pour les gènes sur- ou sous-réguler ou les 2, j’ai réaliser les codes suivants pour spécifiquement 5 % d’erreurs :</p>
+<p>Afin de pouvoir analyser uniquement pour les gènes sur- ou sous-réguler ou les 2, j’ai réaliser les codes suivants pour spécifiquement 5 % d’erreurs avec la p-value ajusté :</p>
 <pre class="r"><code>#pour sur-stranscrit
 UpReg &lt;- filter(resUsName, padj&lt;0.05 &amp; resUsName$log2FoldChange&gt;0)
 head(UpReg)</code></pre>
@@ -771,7 +774,7 @@ blastHomoName &lt;- merge(tx2geneHomo,blastHomo1,by.x=&quot;ensembl_transcript_i
 blastHomoNameUniq &lt;- unique(blastHomoName[,c(&quot;ensembl_gene_id&quot;,&quot;external_gene_name&quot;,&quot;gene&quot;)])
 # associate our DE results with gene names from human
 resUsNamex=merge(as.data.frame(resx),blastHomoNameUniq,by.x=0,by.y=&quot;gene&quot;)</code></pre>
-<p>Afin de pouvoir analyser uniquement pour les gènes sur- ou sous-réguler ou les 2, j’ai réaliser les codes suivants pour spécifiquement 5 % d’erreurs :</p>
+<p>Afin de pouvoir analyser uniquement pour les gènes sur- ou sous-réguler ou les 2, j’ai réaliser les codes suivants pour spécifiquement 5 % d’erreurs avec la p-value ajusté :</p>
 <pre class="r"><code>#pour sur-stranscrit
 UpRegx &lt;- filter(resUsNamex, padj&lt;0.05 &amp; resUsName$log2FoldChange&gt;0)
 head(UpRegx)</code></pre>

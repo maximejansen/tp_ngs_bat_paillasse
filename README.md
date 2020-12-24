@@ -60,7 +60,7 @@ Voici les paramètres de Trimmomatic :
     - Phred33
     - taille minimum : MINLEN:100
     - taille de la coupe au début des séquences : HEADCROP:9
-    - la séquence de l'adaptateur : ILLUMINACLIP:download/adapt.fasta:2:30:10 HEADCROP:9 MINLEN:100
+    - la séquence de l'adaptateur : ILLUMINACLIP:download/adapt.fasta:2:30:10
 
 
 Comme on peut constater, les résultats sont globalement concluant sur la qualité des séquençage. Au revanche, on peut constater qu'il y a des problèmes au niveau des neuf premiers pas de base ainsi que à la fin de chaque séquence. Pour ce dernier, il est possible que ce soit les inserts qui soit aussi analyser, réduisant ainsi la fiabilité à la fin. Pour régler le problème, on a décidé de faire fonctionner le logiciel Trimmomatic afin de régler les différents problèmes Ainsi que d'harmoniser les différents séquençage. 
@@ -294,32 +294,3 @@ GOrilla :
 
   - Version : utilisée en date du 17/12/2020
   - Référence : http://cbl-gorilla.cs.technion.ac.il
-
-
-XXX :
-
-  - Version : 
-  - Référence :
-
-XXX :
-
-  - Version : 
-  - Référence :
-
-
-XXX :
-
-  - Version : 
-  - Référence :
-
-XXX :
-
-  - Version : 
-  - Référence :
-
-
-XXX :
-
-  - Version : 
-  - Référence :
-
