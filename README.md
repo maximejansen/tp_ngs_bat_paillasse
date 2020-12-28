@@ -219,7 +219,7 @@ Cependant, nous pouvons constater que c'est uniquement la **sur-transcription** 
   - concernant les fonctions cellulaires, ce sera surtout ceux qui impact l'activité catalytique qui sera le plus différentiellement réguler. Cependant, la p-value reste assez élevé par rapport à précédemment montrant que cela est bien moins impacté que les processus moléculaire.
   - enfin, concernant les composants cellulaires, ce sera surtout ceux qui qui se situ au niveau de la partie endosomale et la membrane endosomale qui y sera différentiellement réguler.
 
-** Avant de continuer ici, il faut finir de lire le DESeq2/DESeq.html**
+**Avant de continuer ici, il faut finir de lire le DESeq2/DESeq.html**
 
 # Conclusion 
 
