@@ -200,7 +200,7 @@ De la sorte, nous avons obtenu un fichier sous la forme d'un tableau nommé blas
 
 # comparaison de gènes exprimés entre le contrôle et le INF induction échantillon 
 
-Une fois la quantification réalisée grâce à Salmon, on utilise le script de Deseq2 sur r afin de pouvoir comparer les gènes qui sont sur-exprimé ou sous-exprimé en condition d'induction INF contre le contrôle. Les détaille du code utilisé et les annotations sont dans le fichier DESeq2/DESeq.rmd. Les graphiques de cette partie y seront disponibles sur DESeq.html. 
+Une fois la quantification réalisée grâce à Salmon, on utilise le script de Deseq2 sur r afin de pouvoir comparer les gènes qui sont sur-exprimé ou sous-exprimé en condition d'induction INF contre le contrôle. Les détaille du code utilisé et les annotations sont dans le fichier DESeq2/DESeq.html. Les graphiques de cette partie y seront disponibles sur DESeq.html. 
 
 dans le point "# La comparaison" de DESeq2/DESeq.rmd, les graphiques sont stockés dans graphic_NGS/GOrilla/, créé par GOrilla à partir des jeu de données téléchargées allreg, upreg et downreg (ech6) (ou de la version "x" pour ech5) sur le téléchargement all.csv (pour ech6 our bien la version "x" pour ech5). On n'observe pas une grande différence pour ech6 par port au jeu de données ech5. 
 
