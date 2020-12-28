@@ -204,12 +204,22 @@ Une fois la quantification réalisée grâce à Salmon, on utilise le script de 
 
 dans le point "# La comparaison" de DESeq2/DESeq.rmd, les graphiques sont stockés dans graphic_NGS/GOrilla/, créé par GOrilla à partir des jeu de données téléchargées allreg, upreg et downreg (ech6) (ou de la version "x" pour ech5) sur le téléchargement all.csv (pour ech6 our bien la version "x" pour ech5). On n'observe pas une grande différence pour ech6 par port au jeu de données ech5. 
 
-Cependant, nous pouvons constater que c'est uniquement la "sur transcription"  qui a un effet significatif sur les différentes fonctions et process de la cellule. 
+Cependant, nous pouvons constater que c'est uniquement la **sur-transcription**  qui a un effet significatif sur les différentes fonctions et process de la cellule. Voici quelque image ci-dessous obtenue avec GOrilla pour la sur-transcription :
+
+> Le processus moléculaire :
+![processus moleculaire](picture/GOrilla/Processus.png)
+
+> Les fonctions cellulaires :
+![fonctions cellulaires](picture/GOrilla/Function.png)
+
+> Les composants cellulaires :
+![composants cellulaires](picture/GOrilla/Composants.png)
+
   - Concernant le processus moléculaire, nous pouvons constater différents facteurs qui sont très significativement modifié. En premier lieu la réponse immunitaire que ce soit contre les virus (se trouve très particulièrement activé notamment sur la plupart des processus où que la lutte contre le virus sont importants) mais aussi contre tout type de pathogènes et tout activation du système immunitaire se voit de façon générale activée. Bien entendu, cela active aussi la régulation de différents types d'interféron.
   - concernant les fonctions cellulaires, ce sera surtout ceux qui impact l'activité catalytique qui sera le plus différentiellement réguler. Cependant, la p-value reste assez élevé par rapport à précédemment montrant que cela est bien moins impacté que les processus moléculaire.
   - enfin, concernant les composants cellulaires, ce sera surtout ceux qui qui se situ au niveau de la partie endosomale et la membrane endosomale qui y sera différentiellement réguler.
 
-** Avant de continuer ici, il faut finir de lire le DESeq.rmd**
+** Avant de continuer ici, il faut finir de lire le DESeq2/DESeq.html**
 
 # Conclusion 
 
